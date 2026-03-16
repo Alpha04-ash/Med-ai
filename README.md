@@ -15,6 +15,14 @@ Unlike traditional health trackers, MyHealthAI doesn't just display data; it und
 
 ---
 
+## 🌩️ Proof of Google Cloud Integration
+As per the Gemini Challenge requirements (Option 2), this project demonstrates robust utilization of direct Google Cloud services and APIs:
+- **Google GenAI SDK Integration:** [backend/src/agents/doctor_agent.ts](file:///Users/abubakrshokhodzhaev/Desktop/Med%20Ai/backend/src/agents/doctor_agent.ts) - Direct implementation of `@google/genai` for clinically grounded medical analysis.
+- **Multimodal Vision API:** [backend/src/agents/visual_agent.ts](file:///Users/abubakrshokhodzhaev/Desktop/Med%20Ai/backend/src/agents/visual_agent.ts) - Real-time vision processing via Gemini 2.0 Flash.
+- **Agent Architecture:** Our entire agentic backend is designed for deployment on **Google Cloud Run**, utilizing environment-based secret management for Gemini API keys.
+
+---
+
 ## 🚀 Core Features
 - **👁️ Vision (Visual Consult):** Upload or capture images of skin conditions, injuries, or annotated anatomy diagrams for instant AI analysis.
 - **👂 Hearing & 🗣️ Speech:** Real-time voice consultation with **Dr. Aura** using human-like TTS and voice-activated controls.
