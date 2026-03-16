@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model UserProfile {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password_hash String
+  name          String
+  age           Int
+  gender        String
+  weight        Float
+  height        Float
+  baseline_systolic Int @default(120)
+  baseline_diastolic Int @default(80)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  vitals         VitalRecord[]
+  reports        HealthReport[]
+  conversations  Conversation[]
+}
+
+model VitalRecord {
+  id               String   @id @default(uuid())
+  user_id          String
+  timestamp        DateTime @default(now())
+  
+  heart_rate       Int
+  blood_pressure   String
+  temperature      Float
+  spo2             Float
+  respiratory_rate Int
+  
+  user             UserProfile @relation(fields: [user_id], references: [id])
+  
+  @@index([user_id, timestamp(sort: Desc)])
+}
+
+model HealthReport {
+  id             String   @id @default(uuid())
+  user_id        String
+  timestamp      DateTime @default(now())
+  risk_score     Float
+  classification String
+  suggestions    String // Stored as JSON string
+  
+  user           UserProfile @relation(fields: [user_id], references: [id])
+}
+
+model Conversation {
+  id               String   @id @default(uuid())
+  user_id          String
+  ai_doctor_id     String
+  timestamp        DateTime @default(now())
+  
+  transcript       String // Stored as JSON string
+  structured_notes String
+  confidence_score Float
+  
+  user             UserProfile @relation(fields: [user_id], references: [id])
+}
