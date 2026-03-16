@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Activity, ShieldCheck, HeartPulse, ArrowRight } from "lucide-react";
+import { Activity, ShieldCheck, HeartPulse, ArrowRight, Sparkles } from "lucide-react";
 
 export default function LandingPage() {
   const router = useRouter();

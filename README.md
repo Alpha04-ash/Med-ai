@@ -52,7 +52,7 @@ As per the Gemini Challenge requirements (Option 2), this project demonstrates r
 ```bash
 cd backend
 npm install
-cp .env.example .env # Add your DATABASE_URL and GEMINI_API_KEY
+cp .env.example .env
 npx prisma migrate dev
 npm run dev
 ```
@@ -64,6 +64,38 @@ npm install
 npm run dev
 ```
 Visit `http://localhost:3000` to start the experience.
+
+---
+
+## 🧪 Reproducible Testing
+To verify the integrity of the medical risk engine and grounding logic, run the automated test suite:
+
+```bash
+cd backend
+npm test
+```
+
+This suite validates:
+- **Acuity Engine Accuracy:** Ensures vitals are correctly mapped to Stable/Monitor/Critical states.
+- **Grounding Logic:** Validates the prompt injection points for clinical guidelines.
+
+---
+
+## 🤖 Automating Cloud Deployment (Bonus)
+We have automated the containerization and deployment flow using Google Cloud Build and Cloud Run.
+
+**Automated Deployment Script:** [deploy.sh](./deploy.sh)
+
+To deploy the entire stack to Google Cloud in one command:
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
+
+This script automates:
+1. Enabling required Google Cloud APIs.
+2. Building Docker images using Cloud Build.
+3. Deploying to Cloud Run with automatic environment variable mapping.
 
 ---
 
