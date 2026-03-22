@@ -5,6 +5,15 @@
 
 ---
 
+## 🏆 ProduHacks 2026 Submission
+This project is submitted to **ProduHacks 2026** by Kappa Theta Pi at the University of Michigan. 
+
+- **[Product Requirement Document (PRD)](./PRODUHACKS_PRD.md):** Detailed vision, user personas, and technical requirements.
+- **[Pitch Deck Content](./PRODUHACKS_PITCH.md):** Slide-by-slide strategy and business model.
+- **[Submission PDF Archive](./ProduHacks_Submission.zip):** Full source and documentation archive.
+
+---
+
 ## 🌟 Overview
 MyHealthAI is a revolutionary personal healthcare platform that breaks the "text box" paradigm. It combines live medical telemetry with **Gemini 2.0 Flash** to create a seamless "See, Hear, and Speak" consultation loop for **Pi Hacks 2026**.
 
