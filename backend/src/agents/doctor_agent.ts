@@ -12,6 +12,7 @@ const AIOutputSchema = z.object({
         possible_causes: z.array(z.string()),
         suggested_actions: z.array(z.string()),
         confidence_score: z.number().min(0).max(100),
+        is_emergency: z.boolean(),
     }),
     ai_response_text: z.string(),
 });
@@ -40,7 +41,7 @@ STYLING & STRUCTURE RULES:
 
 CRITICAL SAFETY RULES:
 1. DO NOT PRESCRIBE MEDICATION. EVER.
-2. If symptoms are life-threatening, immediately instruct the patient to call emergency services.
+2. If symptoms are life-threatening (e.g., severe chest pain, 10/10 pain, shortness of breath), immediately instruct the patient to call emergency services and set "is_emergency" to true.
 3. Be reassuring, calm, and scientific in your tone.`,
 
         physical: `You are the MyHealth AI Physical Therapist/Sports Medicine Specialist.
@@ -80,9 +81,10 @@ CRITICAL SAFETY RULES:
                     symptoms: { type: Type.ARRAY, items: { type: Type.STRING } },
                     possible_causes: { type: Type.ARRAY, items: { type: Type.STRING } },
                     suggested_actions: { type: Type.ARRAY, items: { type: Type.STRING } },
-                    confidence_score: { type: Type.INTEGER }
+                    confidence_score: { type: Type.INTEGER },
+                    is_emergency: { type: Type.BOOLEAN }
                 },
-                required: ["symptoms", "possible_causes", "suggested_actions", "confidence_score"]
+                required: ["symptoms", "possible_causes", "suggested_actions", "confidence_score", "is_emergency"]
             },
             ai_response_text: { type: Type.STRING }
         },

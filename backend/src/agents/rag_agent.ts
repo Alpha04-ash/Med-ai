@@ -1,10 +1,11 @@
 import { GoogleGenAI, Type, Schema } from '@google/genai';
 import { z } from 'zod';
 import { env } from '../utils/env';
-import { logEvent, logger } from '../utils/logger';
+import { logger, logEvent } from '../utils/logger';
 import { medicalGuidelines, MedicalGuideline } from './medical_dataset';
+import { GeminiKeyManager } from '../utils/key_manager';
 
-const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
+// Removed global 'ai' instance to use key rotation per request
 
 const RAGResponseSchema = z.object({
     answer: z.string(),
@@ -50,6 +51,8 @@ export class RAGAgent {
 
     private static async getEmbedding(text: string): Promise<number[]> {
         try {
+            const apiKey = GeminiKeyManager.getNextKey();
+            const ai = new GoogleGenAI({ apiKey });
             const response = await ai.models.embedContent({
                 model: "text-embedding-004",
                 contents: text,
@@ -141,6 +144,8 @@ INSTRUCTIONS:
 
         // 2. Generation
         try {
+            const apiKey = GeminiKeyManager.getNextKey();
+            const ai = new GoogleGenAI({ apiKey });
             const response = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
                 contents: userQuery,

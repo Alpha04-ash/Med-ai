@@ -123,7 +123,7 @@ REALISM & CLINICAL REASONING PROTOCOLS:
 RISK SCORING (0-100):
 - 0-25 (Stable): Vitals consistent with baseline; no worsening trends; resolved consult issues.
 - 26-60 (Monitor): Emergent negative trends; BP deviations >15%; persistent symptoms reported in consults.
-- 61-100 (Critical): Acute anomalies; rapid vital degradation; severe symptoms with corresponding biometric drops.
+- 61-100 (Critical): Acute anomalies; rapid vital degradation; severe symptoms with corresponding biometric drops; OR if any recent Consultation was flagged as an "is_emergency" by the AI Doctor.
 
 OUTPUT FORMATTING:
 - 'classification': 'Stable' | 'Monitor' | 'Critical'

@@ -1,12 +1,12 @@
 # MyHealthAI: The Multimodal Mini-Hospital 🩺✨
 
-> **Winner - Gemini Live Agent Challenge Submission**
-> Grounded Personal AI Doctor with real-time Multimodal (Vision, Voice, Telemetry) capabilities.
+> **Pi Hacks 2026 Submission - Healthcare Track** 🏆
+> *Developed for the University of Michigan's Kappa Theta Pi Hackathon in partnership with Red Bull.*
 
 ---
 
 ## 🌟 Overview
-MyHealthAI is a revolutionary personal healthcare platform that breaks the "text box" paradigm. It combines live medical telemetry with **Gemini 2.0 Flash** to create a seamless "See, Hear, and Speak" consultation loop. 
+MyHealthAI is a revolutionary personal healthcare platform that breaks the "text box" paradigm. It combines live medical telemetry with **Gemini 2.0 Flash** to create a seamless "See, Hear, and Speak" consultation loop for **Pi Hacks 2026**.
 
 Unlike traditional health trackers, MyHealthAI doesn't just display data; it understands it through a **Clinically Grounded Agentic Architecture**, ensuring that every insight is backed by verified medical protocols.
 

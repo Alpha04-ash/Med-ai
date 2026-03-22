@@ -28,7 +28,7 @@ export class AuthService {
             }
         });
 
-        const token = jwt.sign({ userId: user.id }, env.GEMINI_API_KEY || 'secret', { expiresIn: '7d' });
+        const token = jwt.sign({ userId: user.id }, env.GEMINI_API_KEYS.split(';')[0] || 'secret', { expiresIn: '7d' });
 
         return { user, token };
     }
@@ -46,7 +46,7 @@ export class AuthService {
             throw new Error('Invalid credentials');
         }
 
-        const token = jwt.sign({ userId: user.id }, env.GEMINI_API_KEY || 'secret', { expiresIn: '7d' });
+        const token = jwt.sign({ userId: user.id }, env.GEMINI_API_KEYS.split(';')[0] || 'secret', { expiresIn: '7d' });
 
         return { user, token };
     }

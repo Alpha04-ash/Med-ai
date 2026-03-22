@@ -6,6 +6,7 @@ import { StructuredNotes } from "@/components/StructuredNotes";
 import { useRouter } from "next/navigation";
 import { History, PlusCircle, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { EmergencyOverlay } from "@/components/EmergencyOverlay";
 
 interface ConvItem {
   id: string;
@@ -57,10 +58,11 @@ export default function DoctorsPage() {
   const [chatMessages, setChatMessages] = useState<{ id: string; role: "user" | "assistant"; content: string; image?: string }[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [notesData, setNotesData] = useState<any>(null);
-
   const [conversations, setConversations] = useState<ConvItem[]>([]);
   const [activeConvId, setActiveConvId] = useState<string | null>(null);
   const [histLoading, setHistLoading] = useState(true);
+  const [isEmergencyOpen, setIsEmergencyOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
 
   const userId = typeof window !== "undefined" ? localStorage.getItem("myhealth_user_id") || "demo_user" : "demo_user";
 
@@ -76,6 +78,12 @@ export default function DoctorsPage() {
       .finally(() => setHistLoading(false));
   }, [userId]);
 
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/v1/auth/profile/${userId}`)
+      .then(r => r.json())
+      .then(d => { if (d.success) setUser(d.data); });
+  }, [userId]);
+
   // ── WebSocket connect ──────────────────────────────────────────────────────
   const connectWs = useCallback((sessionId: string) => {
     const socket = new WebSocket(`ws://localhost:8080/ws?userId=${userId}&sessionId=${sessionId}`);
@@ -85,11 +93,16 @@ export default function DoctorsPage() {
         const data = JSON.parse(event.data);
         if (data.type === "chat_reply") {
           setIsTyping(false);
-          setChatMessages((prev) => [
-            ...prev,
-            { id: Date.now().toString(), role: "assistant", content: data.payload.ai_response_text },
-          ]);
-          if (data.payload.structured_notes) setNotesData(data.payload.structured_notes);
+            setChatMessages((prev) => [
+              ...prev,
+              { id: Date.now().toString(), role: "assistant", content: data.payload.ai_response_text },
+            ]);
+            if (data.payload.structured_notes) {
+              setNotesData(data.payload.structured_notes);
+              if (data.payload.structured_notes.is_emergency) {
+                setIsEmergencyOpen(true);
+              }
+            }
         } else if (data.type === "error") {
           setIsTyping(false);
           setChatMessages((prev) => [
@@ -198,6 +211,7 @@ export default function DoctorsPage() {
   }, [isConnected, handleSendMessage]);
 
   return (
+    <>
     <div className="h-full flex flex-col lg:flex-row p-4 md:p-8 max-w-[1600px] mx-auto gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
 
       {/* ── History Sidebar ─────────────────────────────────────── */}
@@ -280,7 +294,14 @@ export default function DoctorsPage() {
           <StructuredNotes data={notesData} className="flex-1 rounded-3xl border-slate-200 dark:border-slate-800 shadow-md min-h-[400px]" />
         </div>
       </div>
-
     </div>
+
+    <EmergencyOverlay 
+      isOpen={isEmergencyOpen} 
+      riskScore={95}
+      userName={user?.name || "Patient"}
+      onClose={() => setIsEmergencyOpen(false)}
+    />
+    </>
   );
 }
